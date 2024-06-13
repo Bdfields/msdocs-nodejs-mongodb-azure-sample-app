@@ -16,6 +16,10 @@ async function getApp() {
   var connectionInfo = await configData.getConnectionInfo();
   mongoose.connect(connectionInfo.DATABASE_URL);
 
+  mongoose.connection.on('connected', () => {
+    console.log(`Mongoose connected to ${mongoose.connection.db.databaseName}`);
+  });
+
   var app = express();
 
   var port = normalizePort(process.env.PORT || '3000');
